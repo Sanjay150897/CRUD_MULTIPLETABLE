@@ -1,6 +1,41 @@
 <?php
 
+session_start();
+
 require_once "config.php";
+
+if (isset($_POST['submit'])) {
+
+    $customername = $_POST['customer_name'];
+    $phone = $_POST['phone'];
+    $ordername = $_POST['ordername'];
+    $fname = $_POST['fname'];
+    $lname = $_POST['lname'];
+    $email = $_POST['email'];
+
+    $sql = "insert into customer(customer_name,phone) values(:customername,:phone)";
+    $stmt = $conn->prepare($sql);
+
+    // $data = [
+    //     ':customername' => $customername,
+    //     ':phone' => $phone,       
+    // ];
+
+
+
+    $stmt_execute = $stmt->execute($data);
+
+    if ($stmt_execute) {
+        $_SESSION['message'] = "inserted successfully";
+        header('Location:crud.php');
+        exit();
+    } else {
+        $_SESSION['message'] = "inserted failed";
+        header('Location:index.php');
+        exit();
+    }
+}
+
 
 
 
@@ -22,12 +57,12 @@ require_once "config.php";
 
     <div class="container">
 
-        <div class="card">
+        <div class="card mb-3">
             <div class="card-body">
                 <h2 class="card-title text-ceter">Insert Multiple Table</h2>
 
 
-                <form action="" method="">
+                <form action="" method="post">
                     <div class="row pt-3">
                         <h2>Customer Details</h2>
                         <div class="col-md-6">
@@ -52,6 +87,7 @@ require_once "config.php";
                             </div>
                         </div>
                     </div>
+
                     <div class="row pb-3">
                         <h2>Student Details</h2>
                         <div class="col-md-10">
@@ -67,10 +103,10 @@ require_once "config.php";
                                 <label>Student Email:</label>
                                 <input type="text" class="form-control" id="email" placeholder="Enter Email" name="email" required>
                             </div>
-                            <div class="checkbox">
-                                <label><input type="checkbox" name="remember"> Remember me</label>
-                            </div>
                         </div>
+                    </div>
+                    <div class="checkbox pb-2">
+                        <label><input type="checkbox" name="remember"> Remember me</label>
                     </div>
                     <div class="col-md-12">
                         <button type="submit" name="submit" class="btn btn-primary">Submit</button>

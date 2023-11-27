@@ -8,31 +8,67 @@ if (isset($_POST['submit'])) {
 
     $customername = $_POST['customer_name'];
     $phone = $_POST['phone'];
-    $ordername = $_POST['ordername'];
+
     $fname = $_POST['fname'];
     $lname = $_POST['lname'];
     $email = $_POST['email'];
 
-    $sql = "insert into customer(customer_name,phone) values(:customername,:phone)";
-    $stmt = $conn->prepare($sql);
+    try {
 
-    // $data = [
-    //     ':customername' => $customername,
-    //     ':phone' => $phone,       
-    // ];
+        $sql = "insert into customer(customer_name,phone) values(:customer_name,:phone)";
+        $stmt = $conn->prepare($sql);
+
+        // $data = [
+        //     ':customername' => $customername,
+        //     ':phone' => $phone,       
+        // ];
+        // $stmt_execute = $stmt->execute($data);
+
+        $stmt->bindParam(":customer_name", $customername);
+        $stmt->bindParam(":phone", $phone);
+        $stmt->execute();
 
 
 
-    $stmt_execute = $stmt->execute($data);
+        // Get last insert ID
+        $last_id = $conn->lastInsertId();
 
-    if ($stmt_execute) {
-        $_SESSION['message'] = "inserted successfully";
-        header('Location:crud.php');
-        exit();
-    } else {
-        $_SESSION['message'] = "inserted failed";
-        header('Location:index.php');
-        exit();
+        $ordername = $_POST['ordername'];
+
+        //Insert data into orders table
+
+        $sql1 = "insert into orders(ordername,customer_id) values(:ordername,:customer_id)";
+
+        $stmt = $conn->prepare($sql1);
+        $stmt->bindParam(":ordername", $ordername);
+        $stmt->bindParam(":customer_id", $last_id);
+        $stmt->execute();
+
+        //Insert Data into student Table
+
+        $stmt = $conn->prepare("insert into student(fname,lname,customer_id,email) 
+            values(:fname,:lname,:last_id,:email)");
+        $stmt->bindParam(":fname", $fname);
+        $stmt->bindParam(":lname", $lname);
+        $stmt->bindParam(":email", $email);
+        $stmt->bindParam(":last_id", $last_id);
+
+        $stmt->execute();
+
+        if ($stmt->execute()) {
+            $_SESSION['message'] = "inserted successfully";
+            //  echo $_SESSION['message'].$last_id;
+            //  header('Refresh:5, url=index.php');
+            header('location:index.php');
+            exit();
+        } else {
+            $_SESSION['message'] = "inserted failed";
+            header('Location:index.php');
+            // echo "Inserted Failed";
+            exit();
+        }
+    } catch (PDOException $e) {
+        echo "My Error Type:" . $e->getMessage();
     }
 }
 
@@ -61,6 +97,12 @@ if (isset($_POST['submit'])) {
             <div class="card-body">
                 <h2 class="card-title text-ceter">Insert Multiple Table</h2>
 
+                <?php if (isset($_SESSION['message'])) : ?>
+                    <h5 class="alert alert-success"><?= $_SESSION['message']; ?></h5>
+                <?php
+                    unset($_SESSION['message']);
+                endif;
+                ?>
 
                 <form action="" method="post">
                     <div class="row pt-3">

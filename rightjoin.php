@@ -29,7 +29,10 @@ require_once('config.php');
 <body>
     <div class="container">
 
+    <!-- Navbar -->
         <?php require_once 'navbar.php'; ?>
+
+
         <div class="row">
             <div class="col-md-12">
                 <div class="card">

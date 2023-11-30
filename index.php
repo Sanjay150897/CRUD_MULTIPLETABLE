@@ -91,73 +91,79 @@ if (isset($_POST['submit'])) {
 
 <body>
 
-    <div class="container">
 
-        <div class="card mb-3">
-            <div class="card-body">
-                <h2 class="card-title text-ceter">Insert Multiple Table</h2>
+    <div class="contaier">
 
-                <?php if (isset($_SESSION['message'])) : ?>
-                    <h5 class="alert alert-success"><?= $_SESSION['message']; ?></h5>
-                <?php
-                    unset($_SESSION['message']);
-                endif;
-                ?>
+        <?php
+        require_once 'navbar.php';
+        ?>
 
-                <form action="" method="post">
-                    <div class="row pt-3">
-                        <h2>Customer Details</h2>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Customer Name:</label>
-                                <input type="text" class="form-control" id="customer_name" placeholder="Enter Customer Name" name="customer_name" required>
+        <section>
+            <div class="card mb-3 mx-3">
+                <div class="card-body">
+                    <h2 class="card-title text-ceter">Insert Multiple Table</h2>
+
+                    <?php if (isset($_SESSION['message'])) : ?>
+                        <h5 class="alert alert-success"><?= $_SESSION['message']; ?></h5>
+                    <?php
+                        unset($_SESSION['message']);
+                    endif;
+                    ?>
+
+                    <form action="" method="post">
+                        <div class="row pt-3">
+                            <h2>Customer Details</h2>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Customer Name:</label>
+                                    <input type="text" class="form-control" id="customer_name" placeholder="Enter Customer Name" name="customer_name" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Phone Number:</label>
+                                    <input type="text" class="form-control" id="phone" placeholder="Enter phone" name="phone" maxlength="10" required>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Phone Number:</label>
-                                <input type="text" class="form-control" id="phone" placeholder="Enter phone" name="phone" maxlength="10" required>
+                        <div class="row py-4">
+                            <h2>Order Details</h2>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Order Name:</label>
+                                    <input type="text" class="form-control" id="ordername" placeholder="Enter Order Name" name="ordername" required>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row py-4">
-                        <h2>Order Details</h2>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Order Name:</label>
-                                <input type="text" class="form-control" id="ordername" placeholder="Enter Order Name" name="ordername" required>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="row pb-3">
-                        <h2>Student Details</h2>
-                        <div class="col-md-10">
-                            <div class="form-group">
-                                <label>Student first Name:</label>
-                                <input type="text" class="form-control" id="fname" placeholder="Enter Student first Name" name="fname" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Student Last Name:</label>
-                                <input type="text" class="form-control" id="lname" placeholder="Enter Student Last Name" name="lname" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Student Email:</label>
-                                <input type="text" class="form-control" id="email" placeholder="Enter Email" name="email" required>
+                        <div class="row pb-3">
+                            <h2>Student Details</h2>
+                            <div class="col-md-10">
+                                <div class="form-group">
+                                    <label>Student first Name:</label>
+                                    <input type="text" class="form-control" id="fname" placeholder="Enter Student first Name" name="fname" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Student Last Name:</label>
+                                    <input type="text" class="form-control" id="lname" placeholder="Enter Student Last Name" name="lname" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Student Email:</label>
+                                    <input type="text" class="form-control" id="email" placeholder="Enter Email" name="email" required>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="checkbox pb-2">
-                        <label><input type="checkbox" name="remember"> Remember me</label>
-                    </div>
-                    <div class="col-md-12">
-                        <button type="submit" name="submit" class="btn btn-primary">Submit</button>
-                        <button type="reset" class="btn btn-danger">Reset</button>
-                    </div>
-                </form>
+                        <div class="checkbox pb-2">
+                            <label><input type="checkbox" name="remember"> Remember me</label>
+                        </div>
+                        <div class="col-md-12">
+                            <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+                            <button type="reset" class="btn btn-danger">Reset</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
-
+        </section>
     </div>
 
 </body>
